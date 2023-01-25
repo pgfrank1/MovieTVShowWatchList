@@ -1,0 +1,3 @@
+<h1>Patrick Frank Individual Project</h1>
+<h3>Problem Statement</h3>
+<p>Do you want to know what your friends and coworkers are watching? Are you tired of being left out of the conversation because you haven't seen the movie or TV show that everyone else has seen? With our app, you'll be able to connect with your friends, family, and coworkers to see what they have watched, what they plan to watch, and what they do not recommend anyone to watch. You'll be able to see any comments and ratings that your acquaintances have made to know what type of shows your friends like. This app will connect to the latest movie and TV show database API to make sure the newest titles can be seen on our site. Become the next content trend setter with your friends today!</p>
