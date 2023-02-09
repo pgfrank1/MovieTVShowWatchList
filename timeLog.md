@@ -9,3 +9,10 @@
     <li>Created the indie project repository</li>
     <li>Created README.md and timeLog.md</li>
 </ul>
+<h3>Week 4</h3>
+<h4>2/06/2026</h4>
+<ul>
+    <li>Completed the problem statement</li>
+    <li>Completed the screen design</li>
+    <li>Completed the project plan</li>
+</ul>
