@@ -14,6 +14,12 @@ public class User {
     private String lastName;
     @Column(name = "username")
     private String username;
+    @OneToMany
+    private MovieComment movieComment;
+    @OneToMany
+    private MovieWatchlist movieWatchlist;
+    @OneToMany
+    private TVWatchList tvWatchList;
 
     public User() { }
 
