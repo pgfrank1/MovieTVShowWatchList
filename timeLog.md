@@ -10,9 +10,18 @@
     <li>Created README.md and timeLog.md</li>
 </ul>
 <h3>Week 4</h3>
-<h4>2/06/2026</h4>
+<h4>2/06/2023</h4>
 <ul>
     <li>Completed the problem statement</li>
     <li>Completed the screen design</li>
     <li>Completed the project plan</li>
+</ul>
+<h3>Week 7</h3>
+<h4>2/26/2023</h4>
+<ul>
+    <li>Connected the movie/TV show api to the database</li>
+    <li>The index page now shows a list of movies and TV shows</li>
+    <li>There are individual movie/TV show listings, plan to make pages for more movies</li>
+    <li>Created a diagram in Vertabelo for the SQL database</li>
+    <li></li>
 </ul>
