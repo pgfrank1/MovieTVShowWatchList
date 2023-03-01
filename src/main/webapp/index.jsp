@@ -6,14 +6,15 @@
 <body>
     <main>
         <c:import url="navbar.jsp" />
-        <h1>${apiKey}</h1>
         <div class="container">
             <div class="row">
-                <div class="col-md p-2 mt-4">
+                <div class="col-md mt-4">
+                    <h3>Trending Movies</h3>
                     <c:import url="movieList.jsp" />
                 </div>
                 <div class="col-md-1"></div>
-                <div class="col-md p-2 mt-4">
+                <div class="col-md mt-4">
+                    <h3>Trending TV Shows</h3>
                     <c:import url="tvShowList.jsp" />
                 </div>
             </div>

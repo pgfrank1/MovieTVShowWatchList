@@ -9,12 +9,6 @@
   <div class="container">
       <c:import url="movieList.jsp" />
   </div>
-  ${mapTest}
-  ${mapTest.getClass()}
-  <c:forEach items="${mapTest}" var="test">
-      <c:out value="${test.original_title}" />
-      <br><br>
-  </c:forEach>
 
 <c:import url="bootStrapScript.jsp" />
 </body>
