@@ -6,6 +6,10 @@
 <body>
     <c:import url="navbar.jsp" />
 
+    <div class="container">
+        <c:import url="tvShowList.jsp" />
+    </div>
+
 <c:import url="bootStrapScript.jsp" />
 </body>
 </html>
