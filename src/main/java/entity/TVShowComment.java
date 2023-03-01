@@ -1,6 +1,6 @@
 package entity;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 import javax.persistence.*;
 
 public class TVShowComment {
