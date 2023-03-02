@@ -1,9 +1,8 @@
 package entity;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
-
-public class TVShowComment {
+public class UserMovieComment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
