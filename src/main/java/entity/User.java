@@ -2,10 +2,13 @@ package entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "User")
-@Table(name = "Users")
-public class User {
+@Table(name = "User")
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -14,23 +17,22 @@ public class User {
     private String username;
     @Column(name = "password")
     private String password;
+    @Column(name = "profile_photo_location")
+    private String profilePhotoLocation;
     @Column(name = "firstName")
     private String firstName;
     @Column(name = "lastName")
     private String lastName;
-    @OneToMany
-    private MovieComment movieComment;
-    @OneToMany
-    private MovieWatchlist movieWatchlist;
-    @OneToMany
-    private TVWatchList tvWatchList;
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<UserMovie> userMovies = new HashSet<>();
     public User() { }
 
-    public User(String firstName, String lastName, String username) {
+    public User(String username, String password, String profilePhotoLocation, String firstName, String lastName) {
+        this.username = username;
+        this.password = password;
+        this.profilePhotoLocation = profilePhotoLocation;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
     }
 
     public int getId() {
@@ -39,6 +41,22 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -57,11 +75,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
-        return username;
+    public Set<UserMovie> getUserMovies() {
+        return userMovies;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserMovies(Set<UserMovie> userMovies) {
+        this.userMovies = userMovies;
     }
 }
