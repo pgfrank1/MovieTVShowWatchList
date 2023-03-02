@@ -50,4 +50,6 @@ fabric.properties
 
 # ignoring the /idea
 .idea/
+# ignore logs folder
+/logs/
 
