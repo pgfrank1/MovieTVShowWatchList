@@ -18,6 +18,7 @@ public class UserDao {
     public User getById(int id) {
         Session session = sessionFactory.openSession();
         User user = session.get(User.class, id);
+        logger.info("Getting User from database via ID " + id);
         session.close();
         return user;
     }
