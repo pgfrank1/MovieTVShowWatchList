@@ -51,6 +51,5 @@ public class UserDaoTest {
         userDao.delete(userDao.getById(1));
 
         assertNull(userDao.getById(1));
-        a
     }
 }
