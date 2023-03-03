@@ -6,14 +6,14 @@
 <body>
     <main>
         <c:import url="navbar.jsp" />
-        <div class="container">
+        <div class="container object-fit-fill">
             <div class="row">
-                <div class="col-md mt-4">
+                <div class="col-lg mt-4">
                     <h3>Trending Movies</h3>
                     <c:import url="movieList.jsp" />
                 </div>
-                <div class="col-md-1"></div>
-                <div class="col-md mt-4">
+                <div class="col-lg-1 m-xxl-5"></div>
+                <div class="col-lg mt-4">
                     <h3>Trending TV Shows</h3>
                     <c:import url="tvShowList.jsp" />
                 </div>
