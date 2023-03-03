@@ -8,7 +8,7 @@
               <c:out value="${movieMap[i.index].title}" />
           </h5>
           <p class="card-text"><c:out value="${movieMap[i.index].overview}" /></p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <a href="./MovieInfo?movie_id=${movieMap[i.index].id}" class="btn btn-primary">Movie Info</a>
         </div>
       </div>
       <div class="card col">
@@ -18,7 +18,7 @@
                   <c:out value="${movieMap[i.index + 1].title}" />
               </h5>
               <p class="card-text"><c:out value="${movieMap[i.index + 1].overview}" /></p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <a href="./MovieInfo?movie_id=${movieMap[i.index + 1].id}" class="btn btn-primary">Movie Info</a>
           </div>
       </div>
   </div>
