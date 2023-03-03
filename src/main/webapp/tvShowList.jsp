@@ -15,7 +15,7 @@
             <p class="card-text"><c:out value="${tvShowMap[i.index].overview}" /></p>
           </c:otherwise>
         </c:choose>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a href="./TVShowInfo?tv_id=${tvShowMap[i.index].id}" class="btn btn-primary">Get Info</a>
       </div>
     </div>
     <div class="card col">
@@ -32,7 +32,7 @@
             <p class="card-text"><c:out value="${tvShowMap[i.index + 1].overview}" /></p>
           </c:otherwise>
         </c:choose>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a href="./TVShowInfo?tv_id=${tvShowMap[i.index].id}" class="btn btn-primary">Get Info</a>
       </div>
     </div>
   </div>
