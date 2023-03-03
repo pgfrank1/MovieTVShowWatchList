@@ -2,8 +2,9 @@ package controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
@@ -13,12 +14,13 @@ import java.util.Map;
 
 @WebServlet(
         name = "applicationStartup",
-        urlPatterns = { "/IndieProject_war" },
+        urlPatterns = { "/application-startup" },
         loadOnStartup = 1
 )
 public class StartupServlet extends HttpServlet {
+    private final Logger logger = LogManager.getLogger(this.getClass());
     @Override
-    public void init() throws ServletException {
+    public void init() {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -29,26 +31,18 @@ public class StartupServlet extends HttpServlet {
         String tvShowAPIUrl = "https://api.themoviedb.org/3/tv/popular?api_key="
                 + getServletContext().getAttribute("apiKey") + "&language=en-US&page=1";
 
-        URL urlMovie;
-        URL urlTVShow;
         try {
-            urlMovie = new URL(movieAPIUrl);
-            urlTVShow = new URL(tvShowAPIUrl);
+            URL urlMovie = new URL(movieAPIUrl);
+            URL urlTVShow = new URL(tvShowAPIUrl);
+            Map<String, Object> movieMap = objectMapper.readValue(urlMovie, new TypeReference<>() {});
+            Map<String, Object> tvShowMap = objectMapper.readValue(urlTVShow, new TypeReference<>() {});
+            //TODO: .get("results) is unnecessary EX: can use movieMap.results[i.index].overview
+            getServletContext().setAttribute("movieMap", movieMap.get("results"));
+            getServletContext().setAttribute("tvShowMap", tvShowMap.get("results"));
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-
-        Map<String, Object> movieMap;
-        Map<String, Object> tvShowMap;
-        try {
-            movieMap = objectMapper.readValue(urlMovie, new TypeReference<>() {});
-            tvShowMap = objectMapper.readValue(urlTVShow, new TypeReference<>() {});
+            logger.error("There was an error with forming the url.\n" + e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            logger.error("An IO error has occurred when attempting to read data from the API URL.\n" + e);
         }
-
-        getServletContext().setAttribute("movieMap", movieMap.get("results"));
-        getServletContext().setAttribute("tvShowMap", tvShowMap.get("results"));
-
     }
 }
