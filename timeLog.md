@@ -23,5 +23,6 @@
     <li>The index page now shows a list of movies and TV shows</li>
     <li>There are individual movie/TV show listings, plan to make pages for more movies</li>
     <li>Created a diagram in Vertabelo for the SQL database</li>
-    <li></li>
+    <li>Updated the individual TV show info page so that the title, poster, and description appears</li>
+    <li>Created the UserDAO and UserDAOTest. So far the tests are passing.</li>
 </ul>
