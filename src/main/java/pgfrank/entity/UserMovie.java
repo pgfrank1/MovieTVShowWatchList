@@ -1,4 +1,4 @@
-package entity;
+package pgfrank.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 @Entity(name = "UserMovie")
 @Table(name = "UserMovie")
-public class UserMovie implements Serializable{
+public class UserMovie implements Serializable {
     @Id
     private int movie_id;
     @Column(name = "watched")

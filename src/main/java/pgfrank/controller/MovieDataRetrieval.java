@@ -1,4 +1,4 @@
-package controller;
+package pgfrank.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +33,7 @@ public class MovieDataRetrieval extends HttpServlet {
             URL urlMovieInfo = new URL(movieInfoUrl);
             Map<String, Object> movieInfo = objectMapper.readValue(urlMovieInfo, new TypeReference<>() {});
             session.setAttribute("movieInfo", movieInfo);
+            logger.debug("Successfully retrieved Movie information from the API: " + movieInfo);
         } catch (MalformedURLException e) {
             logger.error("There was an error with forming the url for an individual movie.\n" + e);
         } catch (IOException e) {

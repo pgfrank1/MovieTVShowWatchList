@@ -1,7 +1,7 @@
 package persistence;
 
-import entity.User;
-import entity.UserMovie;
+import pgfrank.entity.User;
+import pgfrank.persistence.UserDao;
 import util.Database;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

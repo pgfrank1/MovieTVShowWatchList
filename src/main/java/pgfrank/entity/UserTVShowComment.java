@@ -1,4 +1,4 @@
-package entity;
+package pgfrank.entity;
 
 import org.hibernate.annotations.*;
 import javax.persistence.*;

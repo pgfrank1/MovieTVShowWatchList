@@ -1,6 +1,6 @@
-package persistence;
+package pgfrank.persistence;
 
-import entity.User;
+import pgfrank.entity.User;
 import org.apache.logging.log4j.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

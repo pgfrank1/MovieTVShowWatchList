@@ -1,4 +1,4 @@
-package controller;
+package pgfrank.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,9 +36,10 @@ public class StartupServlet extends HttpServlet {
             URL urlTVShow = new URL(tvShowAPIUrl);
             Map<String, Object> movieMap = objectMapper.readValue(urlMovie, new TypeReference<>() {});
             Map<String, Object> tvShowMap = objectMapper.readValue(urlTVShow, new TypeReference<>() {});
-            //TODO: .get("results) is unnecessary EX: can use movieMap.results[i.index].overview
+            //TODO: .get("results) is unnecessary EX: can use movieMap.results[i.index].overview to contain all JSON data received
             getServletContext().setAttribute("movieMap", movieMap.get("results"));
             getServletContext().setAttribute("tvShowMap", tvShowMap.get("results"));
+            logger.debug("Successfully retried Movie and TV show data for the index page:\n" + movieMap + "\n" + tvShowMap);
         } catch (MalformedURLException e) {
             logger.error("There was an error with forming the url.\n" + e);
         } catch (IOException e) {

@@ -1,4 +1,4 @@
-package controller;
+package pgfrank.controller;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

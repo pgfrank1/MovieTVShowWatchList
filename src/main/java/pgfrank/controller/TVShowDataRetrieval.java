@@ -1,4 +1,4 @@
-package controller;
+package pgfrank.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +34,7 @@ public class TVShowDataRetrieval extends HttpServlet {
             URL urlTvShowInfo = new URL(tvShowInfoUrl);
             Map<String, Object> tvShowInfo = objectMapper.readValue(urlTvShowInfo, new TypeReference<>() {});
             session.setAttribute("tvShowInfo", tvShowInfo);
+            logger.debug("Successfully retrieved the individual TV show information: " + tvShowInfo );
         } catch (MalformedURLException e) {
             logger.error("There was an error with forming the url for an individual TV Show.\n" + e);
         } catch (IOException e) {
