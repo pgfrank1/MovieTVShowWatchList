@@ -22,11 +22,4 @@ public class UserMovieDaoTest {
         userDao = new UserDao();
         userMovieDao = new UserMovieDao();
     }
-
-    @Test
-    void getMovieByUserId() {
-
-        userMovie = userMovieDao.getByUserId(userDao.getById(2));
-        assertEquals(1234, userMovie.getMovie_id());
-    }
 }

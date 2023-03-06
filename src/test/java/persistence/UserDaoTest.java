@@ -5,6 +5,9 @@ import pgfrank.persistence.UserDao;
 import util.Database;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserDaoTest {
@@ -18,35 +21,42 @@ public class UserDaoTest {
         userDao = new UserDao();
     }
     @Test
-    void getById() {
-        assertEquals("Patrick", userDao.getById(1).getFirstName());
+    void getByUserId() {
+        assertEquals("Patrick", userDao.getUserById(1).getFirstName());
     }
-
     @Test
-    void insert() {
+    void testInsertUser() {
         user = new User("testUsername", "testPassword", "/testPhotoLocationUnitTest", "Unit", "Testing");
-        int id = userDao.insert(user);
+        int id = userDao.insertUser(user);
         assertNotEquals(0, id);
-        User insertedUser = userDao.getById(id);
+        User insertedUser = userDao.getUserById(id);
         assertEquals("Unit", insertedUser.getFirstName());
         assertEquals("Testing", insertedUser.getLastName());
     }
 
     @Test
     void updateSuccess() {
-        user = userDao.getById(1);
+        user = userDao.getUserById(1);
         user.setFirstName("Update");
         user.setLastName("Test");
-        userDao.saveOrUpdate(user);
+        userDao.saveOrUpdateUser(user);
 
-        User userToCheck = userDao.getById(1);
+        User userToCheck = userDao.getUserById(1);
         assertEquals(user.getFirstName(), userToCheck.getFirstName());
         assertEquals(user.getLastName(), userToCheck.getLastName());
     }
 
+    //TODO: Error occurred validating the Criteria, IllegalArgumentException
+    @Test
+    void getAllUsers() {
+        List<User> users = userDao.getAllUsers();
+
+    }
+
+    //TODO: not currently working. Cascading is very strange
     @Test
     void deleteSuccess() {
-        userDao.delete(userDao.getById(1));
-        assertNull(userDao.getById(1));
+        userDao.deleteUser(userDao.getUserById(1));
+        assertNull(userDao.getUserById(1));
     }
 }

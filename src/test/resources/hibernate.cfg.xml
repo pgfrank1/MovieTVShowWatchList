@@ -19,5 +19,7 @@
         <mapping class="pgfrank.entity.UserFriend" />
         <mapping class="pgfrank.entity.UserMovie" />
         <mapping class="pgfrank.entity.UserMovieComment" />
+        <mapping class="pgfrank.entity.UserTVShow" />
+        <mapping class="pgfrank.entity.UserTVShowComment" />
     </session-factory>
 </hibernate-configuration>
