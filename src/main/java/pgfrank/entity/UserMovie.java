@@ -2,6 +2,7 @@ package pgfrank.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * The type Movie.
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @Table(name = "UserMovie")
 public class UserMovie implements Serializable {
     @Id
+    @Column(name = "movie_id")
     private int movie_id;
     @Column(name = "watched")
     private boolean watched;
@@ -20,7 +22,10 @@ public class UserMovie implements Serializable {
     @Column(name = "dropped")
     private boolean dropped;
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
+    @OneToMany(mappedBy = "userMovie", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<UserMovieComment> userMovieComments;
 
     public UserMovie() {
     }
@@ -78,6 +83,23 @@ public class UserMovie implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<UserMovieComment> getUserMovieComments() {
+        return userMovieComments;
+    }
+
+    public void setUserMovieComment(Set<UserMovieComment> userMovieComment) {
+        userMovieComments = userMovieComment;
+    }
+
+    public void addUserMovieComment(UserMovieComment userMovieComment) {
+        userMovieComments.add(userMovieComment);
+        userMovieComment.setUserMovie(this);
+    }
+    public void removeUserMovieComment(UserMovieComment userMovieComment) {
+        userMovieComments.remove(userMovieComment);
+        userMovieComment.setUserMovie(null);
     }
 }
 

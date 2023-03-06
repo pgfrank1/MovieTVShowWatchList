@@ -1,12 +1,15 @@
 package pgfrank.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "User")
+@Entity
 @Table(name = "User")
 public class User implements Serializable {
     @Id
@@ -24,7 +27,14 @@ public class User implements Serializable {
     @Column(name = "lastName")
     private String lastName;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<UserMovie> userMovies = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<UserMovieComment> userMovieComments = new HashSet<>();
+    @ManyToMany
+    private Set<UserFriend> userFriends;
+
     public User() { }
 
     public User(String username, String password, String profilePhotoLocation, String firstName, String lastName) {
@@ -59,6 +69,14 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getProfilePhotoLocation() {
+        return profilePhotoLocation;
+    }
+
+    public void setProfilePhotoLocation(String profilePhotoLocation) {
+        this.profilePhotoLocation = profilePhotoLocation;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -81,5 +99,50 @@ public class User implements Serializable {
 
     public void setUserMovies(Set<UserMovie> userMovies) {
         this.userMovies = userMovies;
+    }
+
+    public void addUserMovie(UserMovie userMovie) {
+        userMovies.add(userMovie);
+        userMovie.setUser(this);
+    }
+
+    public void removeUserMovie(UserMovie userMovie) {
+        userMovies.remove(userMovie);
+        userMovie.setUser(null);
+    }
+
+    public Set<UserMovieComment> getUserMovieComments() {
+        return userMovieComments;
+    }
+
+    public void setUserMovieComments(Set<UserMovieComment> userMovieComments) {
+        this.userMovieComments = userMovieComments;
+    }
+
+    public void addUserMovieComment(UserMovieComment userMovieComment) {
+        userMovieComments.add(userMovieComment);
+        userMovieComment.setUser(this);
+    }
+
+    public void removeUserMovieComment(UserMovieComment userMovieComment) {
+        userMovieComments.remove(userMovieComment);
+        userMovieComment.setUser(null);
+    }
+
+    public Set<UserFriend> getUsers() {
+        return userFriends;
+    }
+
+    public void setUsers(Set<UserFriend> users) {
+        this.userFriends = users;
+    }
+
+    public void addUserFriend(UserFriend userFriend) {
+        userFriends.add(userFriend);
+        userFriend.setUserFriend(this);
+    }
+    public void removeUserFriend(UserFriend userFriend) {
+        userFriends.remove(userFriend);
+        userFriend.setUserFriend(null);
     }
 }
