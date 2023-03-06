@@ -9,8 +9,8 @@ use IndieProjectTest;
 
 CREATE TABLE UserFriends (
     user_id int  NOT NULL,
-    Friend_id int  NOT NULL,
-    CONSTRAINT UserFriends_pk PRIMARY KEY (user_id,Friend_id)
+    friend_id int  NOT NULL,
+    CONSTRAINT UserFriends_pk PRIMARY KEY (user_id,friend_id)
 );
 
 -- Table: UserMovie
@@ -81,8 +81,8 @@ CREATE TABLE User (
 );
 
 -- foreign keys
--- Reference: UserFriends_Friend_id (table: UserFriends)
-ALTER TABLE UserFriends ADD CONSTRAINT UserFriends_Friend_id FOREIGN KEY UserFriends_Friend_id (Friend_id)
+-- Reference: UserFriends_friend_id (table: UserFriends)
+ALTER TABLE UserFriends ADD CONSTRAINT UserFriends_friend_id FOREIGN KEY UserFriends_friend_id (friend_id)
     REFERENCES User (id);
 
 -- Reference: UserFriends_user_id (table: UserFriends)
@@ -117,7 +117,7 @@ insert into User (id, username, password, profile_photo_location, firstName, las
     values (1, 'pgfrank', 'p@ssw0rd', '/testPhotoLocation', 'Patrick', 'Frank'),
            (2, 'user1', 'anotherPassword', '/anotherTestLocation', 'Jeremy', 'Smith');
 
-insert into UserFriends (user_id, Friend_id) values (1, 2), (2, 1);
+insert into UserFriends (user_id, friend_id) values (1, 2), (2, 1);
 
 insert into UserTVShow (show_id, user_id, watched, planned, watching, dropped)
     values (123, 1, true, false, false, false),
