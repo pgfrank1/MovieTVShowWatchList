@@ -13,11 +13,11 @@ import java.util.Set;
 public class UserFriend implements Serializable{
     @Id
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(referencedColumnName = "user_id")
     private User user;
     @Id
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(referencedColumnName = "user_id")
     private User userFriend;
 
     public User getUser() {

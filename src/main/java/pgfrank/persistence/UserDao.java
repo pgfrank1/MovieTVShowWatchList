@@ -1,37 +1,28 @@
 package pgfrank.persistence;
 
-import pgfrank.entity.User;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import pgfrank.entity.User;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class UserDao {
     private final Logger logger = LogManager.getLogger(this.getClass());
     SessionFactory sessionFactory = SessionFactoryProvider.getSessionFactory();
 
-    public User getById(int id) {
+    public User getUserById(int user_id) {
         Session session = sessionFactory.openSession();
-        User user = session.get(User.class, id);
-        logger.info("Getting User from database via ID " + id);
+        User user = session.get(User.class, user_id);
+        logger.info("Getting User from database via ID: " + user_id);
         session.close();
         return user;
     }
-
-    public void saveOrUpdate(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.saveOrUpdate(user);
-        transaction.commit();
-        session.close();
-    }
-
-    public int insert(User user) {
+    public int insertUser(User user) {
         int id = 0;
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -41,7 +32,15 @@ public class UserDao {
         return id;
     }
 
-    public void delete(User user) {
+    public void saveOrUpdateUser(User user) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.saveOrUpdate(user);
+        transaction.commit();
+        session.close();
+    }
+
+    public void deleteUser(User user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.delete(user);
@@ -49,16 +48,16 @@ public class UserDao {
         session.close();
     }
 
-    public List<User> getAll() {
+    //TODO: Error occurred validating the Criteria, IllegalArgumentException
+    public List<User> getAllUsers() {
         Session session = sessionFactory.openSession();
-
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<User> query = builder.createQuery(User.class);
-        Root<User> root = query.from(User.class);
-        List<User> users = session.createQuery(query).getResultList();
+        CriteriaQuery<User> query = builder.createQuery( User.class );
+        List<User> users = session.createQuery( query ).getResultList();
 
-        logger.debug("The list of users" + users);
+        logger.debug("The list of Authors:\n" + users);
         session.close();
+
         return users;
     }
 }

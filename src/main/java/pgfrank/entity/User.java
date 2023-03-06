@@ -9,16 +9,16 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "User")
+@Entity(name = "User")
+@Table(name = "user")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private int id;
+    private int user_id;
     @Column(name = "username")
     private String username;
-    @Column(name = "password")
+    @Column(name = "user_password")
     private String password;
     @Column(name = "profile_photo_location")
     private String profilePhotoLocation;
@@ -26,14 +26,8 @@ public class User implements Serializable {
     private String firstName;
     @Column(name = "lastName")
     private String lastName;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<UserMovie> userMovies = new HashSet<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<UserMovieComment> userMovieComments = new HashSet<>();
-    @ManyToMany
-    private Set<UserFriend> userFriends;
+    @OneToMany
+    private Set<UserMovie> userMovies;
 
     public User() { }
 
@@ -46,11 +40,11 @@ public class User implements Serializable {
     }
 
     public int getId() {
-        return id;
+        return user_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {
@@ -109,40 +103,5 @@ public class User implements Serializable {
     public void removeUserMovie(UserMovie userMovie) {
         userMovies.remove(userMovie);
         userMovie.setUser(null);
-    }
-
-    public Set<UserMovieComment> getUserMovieComments() {
-        return userMovieComments;
-    }
-
-    public void setUserMovieComments(Set<UserMovieComment> userMovieComments) {
-        this.userMovieComments = userMovieComments;
-    }
-
-    public void addUserMovieComment(UserMovieComment userMovieComment) {
-        userMovieComments.add(userMovieComment);
-        userMovieComment.setUser(this);
-    }
-
-    public void removeUserMovieComment(UserMovieComment userMovieComment) {
-        userMovieComments.remove(userMovieComment);
-        userMovieComment.setUser(null);
-    }
-
-    public Set<UserFriend> getUsers() {
-        return userFriends;
-    }
-
-    public void setUsers(Set<UserFriend> users) {
-        this.userFriends = users;
-    }
-
-    public void addUserFriend(UserFriend userFriend) {
-        userFriends.add(userFriend);
-        userFriend.setUserFriend(this);
-    }
-    public void removeUserFriend(UserFriend userFriend) {
-        userFriends.remove(userFriend);
-        userFriend.setUserFriend(null);
     }
 }

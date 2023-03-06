@@ -2,115 +2,140 @@
 -- Last modification date: 2023-02-28 22:30:43.842
 
 -- tables
--- Table: UserFriends
+-- Table: userFriends
 drop schema if exists IndieProject;
 create schema IndieProject;
 use IndieProject;
 
-CREATE TABLE UserFriends (
-    UserId int  NOT NULL,
-    FriendId int  NOT NULL,
-    CONSTRAINT UserFriends_pk PRIMARY KEY (UserId,FriendId)
+CREATE TABLE userFriends (
+                             user_id int  NOT NULL,
+                             friend_id int  NOT NULL,
+                             CONSTRAINT userFriends_pk PRIMARY KEY (user_id,friend_id)
 );
 
--- Table: UserMovie
-CREATE TABLE UserMovie (
-    movieId int  NOT NULL,
-    userId int  NOT NULL,
-    watched bool  NOT NULL,
-    planned bool  NOT NULL,
-    watching bool  NOT NULL,
-    dropped bool  NOT NULL,
-    CONSTRAINT UserMovie_pk PRIMARY KEY (movieId,userId)
+-- Table: userMovie
+CREATE TABLE userMovie (
+                           movie_id int  NOT NULL,
+                           user_id int  NOT NULL,
+                           watched bool  NOT NULL,
+                           planned bool  NOT NULL,
+                           watching bool  NOT NULL,
+                           dropped bool  NOT NULL,
+                           CONSTRAINT userMovie_pk PRIMARY KEY (movie_id,user_id)
 );
 
--- Table: UserMovieComments
-CREATE TABLE UserMovieComments (
-    id int  NOT NULL AUTO_INCREMENT,
-    comment varchar(255)  NOT NULL,
-    movieId int  NOT NULL,
-    userId int  NOT NULL,
-    CONSTRAINT UserMovieComments_pk PRIMARY KEY (id)
+-- Table: userMovieComments
+CREATE TABLE userMovieComments (
+                                   user_movie_comments_id int  NOT NULL AUTO_INCREMENT,
+                                   comment varchar(255)  NOT NULL,
+                                   movie_id int  NOT NULL,
+                                   user_id int  NOT NULL,
+                                   CONSTRAINT userMovieComments_pk PRIMARY KEY (user_movie_comments_id)
 );
 
--- Table: UserMovieRating
-CREATE TABLE UserMovieRating (
-    userId int  NOT NULL,
-    movieId int  NOT NULL,
-    rating int  NOT NULL,
-    CONSTRAINT UserMovieRating_pk PRIMARY KEY (movieId,userId)
+-- Table: userMovieRating
+CREATE TABLE userMovieRating (
+                                 user_id int  NOT NULL,
+                                 movie_id int  NOT NULL,
+                                 rating int  NOT NULL,
+                                 CONSTRAINT userMovieRating_pk PRIMARY KEY (movie_id,user_id)
 );
 
--- Table: UserTVShow
-CREATE TABLE UserTVShow (
-    showId int  NOT NULL,
-    userId int  NOT NULL,
-    watched bool  NOT NULL,
-    planned bool  NOT NULL,
-    watching bool  NOT NULL,
-    dropped bool  NOT NULL,
-    CONSTRAINT UserTVShow_pk PRIMARY KEY (showId,userId)
+-- Table: userTVShow
+CREATE TABLE userTVShow (
+                            show_id int  NOT NULL,
+                            user_id int  NOT NULL,
+                            watched bool  NOT NULL,
+                            planned bool  NOT NULL,
+                            watching bool  NOT NULL,
+                            dropped bool  NOT NULL,
+                            CONSTRAINT userTVShow_pk PRIMARY KEY (show_id,user_id)
 );
 
--- Table: UserTVShowComments
-CREATE TABLE UserTVShowComments (
-    id int  NOT NULL AUTO_INCREMENT,
-    comment varchar(255)  NOT NULL,
-    showId int  NOT NULL,
-    userId int  NOT NULL,
-    CONSTRAINT UserTVShowComments_pk PRIMARY KEY (id)
+-- Table: userTVShowComments
+CREATE TABLE userTVShowComments (
+                                    tv_show_comment_id int  NOT NULL AUTO_INCREMENT,
+                                    comment varchar(255)  NOT NULL,
+                                    show_id int  NOT NULL,
+                                    user_id int  NOT NULL,
+                                    CONSTRAINT userTVShowComments_pk PRIMARY KEY (tv_show_comment_id)
 );
 
--- Table: UserTVShowRating
-CREATE TABLE UserTVShowRating (
-    userId int  NOT NULL,
-    showId int  NOT NULL,
-    rating int  NOT NULL,
-    CONSTRAINT UserTVShowRating_pk PRIMARY KEY (userId,showId)
+-- Table: userTVShowRating
+CREATE TABLE userTVShowRating (
+                                  user_id int  NOT NULL,
+                                  show_id int  NOT NULL,
+                                  rating int  NOT NULL,
+                                  CONSTRAINT userTVShowRating_pk PRIMARY KEY (user_id,show_id)
 );
 
--- Table: Users
-CREATE TABLE Users (
-    id int  NOT NULL AUTO_INCREMENT,
-    username varchar(50)  NOT NULL,
-    password varchar(50)  NOT NULL,
-    profilePhotoLocation varchar(50)  NOT NULL,
-    firstName varchar(50)  NOT NULL,
-    lastName varchar(50)  NOT NULL,
-    CONSTRAINT Id PRIMARY KEY (id)
+-- Table: user
+CREATE TABLE user (
+                      user_id int  NOT NULL AUTO_INCREMENT,
+                      username varchar(50)  NOT NULL,
+                      user_password varchar(50)  NOT NULL,
+                      profile_photo_location varchar(50)  NOT NULL,
+                      firstName varchar(50)  NOT NULL,
+                      lastName varchar(50)  NOT NULL,
+                      CONSTRAINT user_id PRIMARY KEY (user_id)
 );
 
 -- foreign keys
--- Reference: UserFriends_FriendId (table: UserFriends)
-ALTER TABLE UserFriends ADD CONSTRAINT UserFriends_FriendId FOREIGN KEY UserFriends_FriendId (FriendId)
-    REFERENCES Users (id);
+-- Reference: userFriends_friend_id (table: userFriends)
+ALTER TABLE userFriends ADD CONSTRAINT userFriends_friend_id FOREIGN KEY userFriends_friend_id (friend_id)
+    REFERENCES user (user_id);
 
--- Reference: UserFriends_UserId (table: UserFriends)
-ALTER TABLE UserFriends ADD CONSTRAINT UserFriends_UserId FOREIGN KEY UserFriends_UserId (UserId)
-    REFERENCES Users (id);
+-- Reference: userFriends_user_id (table: userFriends)
+ALTER TABLE userFriends ADD CONSTRAINT userFriends_user_id FOREIGN KEY userFriends_user_id (user_id)
+    REFERENCES user (user_id);
 
--- Reference: UserMovieComments_UserMovie (table: UserMovieComments)
-ALTER TABLE UserMovieComments ADD CONSTRAINT UserMovieComments_UserMovie FOREIGN KEY UserMovieComments_UserMovie (movieId,userId)
-    REFERENCES UserMovie (movieId,userId);
+-- Reference: userMovieComments_userMovie (table: userMovieComments)
+ALTER TABLE userMovieComments ADD CONSTRAINT userMovieComments_userMovie FOREIGN KEY userMovieComments_userMovie (movie_id,user_id)
+    REFERENCES userMovie (movie_id,user_id);
 
--- Reference: UserMovieRating_UserMovie (table: UserMovieRating)
-ALTER TABLE UserMovieRating ADD CONSTRAINT UserMovieRating_UserMovie FOREIGN KEY UserMovieRating_UserMovie (movieId,userId)
-    REFERENCES UserMovie (movieId,userId);
+-- Reference: userMovieRating_userMovie (table: userMovieRating)
+ALTER TABLE userMovieRating ADD CONSTRAINT userMovieRating_userMovie FOREIGN KEY userMovieRating_userMovie (movie_id,user_id)
+    REFERENCES userMovie (movie_id,user_id);
 
--- Reference: UserMovie_Users (table: UserMovie)
-ALTER TABLE UserMovie ADD CONSTRAINT UserMovie_Users FOREIGN KEY UserMovie_Users (userId)
-    REFERENCES Users (id);
+-- Reference: userMovie_user (table: userMovie)
+ALTER TABLE userMovie ADD CONSTRAINT userMovie_user FOREIGN KEY userMovie_user (user_id)
+    REFERENCES user (user_id);
 
--- Reference: UserTVShowComments_UserTVShow (table: UserTVShowComments)
-ALTER TABLE UserTVShowComments ADD CONSTRAINT UserTVShowComments_UserTVShow FOREIGN KEY UserTVShowComments_UserTVShow (showId,userId)
-    REFERENCES UserTVShow (showId,userId);
+-- Reference: userTVShowComments_userTVShow (table: userTVShowComments)
+ALTER TABLE userTVShowComments ADD CONSTRAINT userTVShowComments_userTVShow FOREIGN KEY userTVShowComments_userTVShow (show_id,user_id)
+    REFERENCES userTVShow (show_id,user_id);
 
--- Reference: UserTVShowRating_UserTVShow (table: UserTVShowRating)
-ALTER TABLE UserTVShowRating ADD CONSTRAINT UserTVShowRating_UserTVShow FOREIGN KEY UserTVShowRating_UserTVShow (showId,userId)
-    REFERENCES UserTVShow (showId,userId);
+-- Reference: userTVShowRating_userTVShow (table: userTVShowRating)
+ALTER TABLE userTVShowRating ADD CONSTRAINT userTVShowRating_userTVShow FOREIGN KEY userTVShowRating_userTVShow (show_id,user_id)
+    REFERENCES userTVShow (show_id,user_id);
 
--- Reference: UserTVShow_Users (table: UserTVShow)
-ALTER TABLE UserTVShow ADD CONSTRAINT UserTVShow_Users FOREIGN KEY UserTVShow_Users (userId)
-    REFERENCES Users (id);
+-- Reference: userTVShow_user (table: userTVShow)
+ALTER TABLE userTVShow ADD CONSTRAINT userTVShow_user FOREIGN KEY userTVShow_user (user_id)
+    REFERENCES user (user_id);
+
+insert into user (user_id, username, user_password, profile_photo_location, firstName, lastName)
+values (1, 'pgfrank', 'p@ssw0rd', '/testPhotoLocation', 'Patrick', 'Frank'),
+       (2, 'user1', 'anotherPassword', '/anotherTestLocation', 'Jeremy', 'Smith');
+
+# insert into userFriends (user_id, friend_id) values (1, 2), (2, 1);
+
+insert into userTVShow (show_id, user_id, watched, planned, watching, dropped)
+values (123, 1, true, false, false, false),
+       (456, 2, false, true, false, false);
+
+insert into userMovie (movie_id, user_id, watched, planned, watching, dropped)
+values (1234, 2, false, false, true, false),
+       (5678, 1, false, false, false, true);
+
+insert into userMovieComments (comment, movie_id, user_id)
+values ('This is a comment from Patrick Frank for a Movie', 5678, 1),
+       ('This is a comment from Jeremy Smith for a Movie', 1234, 2);
+
+insert into userTVShowComments (comment, show_id, user_id)
+values ('This is a comment from Patrick Frank for a TV Show', 123, 1),
+       ('This is a comment from Jeremy Smith for a TV Show', 456, 2);
+
+/*insert into userMovieRating (user_id, movie_id, rating) values (1, 5678, 5), (2, 1234, 3);
+insert into userTVShowRating (user_id, show_id, rating) value (1, 123, 2), (2, 456, 4);*/
 
 -- End of file.

@@ -8,7 +8,7 @@ import java.util.Set;
  * The type Movie.
  */
 @Entity(name = "UserMovie")
-@Table(name = "UserMovie")
+@Table(name = "userMovie")
 public class UserMovie implements Serializable {
     @Id
     @Column(name = "movie_id")
@@ -21,20 +21,22 @@ public class UserMovie implements Serializable {
     private boolean watching;
     @Column(name = "dropped")
     private boolean dropped;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
-    @OneToMany(mappedBy = "userMovie", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany
     private Set<UserMovieComment> userMovieComments;
 
     public UserMovie() {
     }
-    public UserMovie(boolean watched, boolean planned, boolean watching, boolean dropped, User user) {
+
+    public UserMovie(int movie_id, boolean watched, boolean planned, boolean watching, boolean dropped, User user, Set<UserMovieComment> userMovieComments) {
+        this.movie_id = movie_id;
         this.watched = watched;
         this.planned = planned;
         this.watching = watching;
         this.dropped = dropped;
         this.user = user;
+        this.userMovieComments = userMovieComments;
     }
 
     public int getMovie_id() {
@@ -89,17 +91,7 @@ public class UserMovie implements Serializable {
         return userMovieComments;
     }
 
-    public void setUserMovieComment(Set<UserMovieComment> userMovieComment) {
-        userMovieComments = userMovieComment;
-    }
-
-    public void addUserMovieComment(UserMovieComment userMovieComment) {
-        userMovieComments.add(userMovieComment);
-        userMovieComment.setUserMovie(this);
-    }
-    public void removeUserMovieComment(UserMovieComment userMovieComment) {
-        userMovieComments.remove(userMovieComment);
-        userMovieComment.setUserMovie(null);
+    public void setUserMovieComments(Set<UserMovieComment> userMovieComments) {
+        this.userMovieComments = userMovieComments;
     }
 }
-

@@ -2,8 +2,8 @@ package pgfrank.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
-@Entity
-@Table(name = "UserMovieComments")
+@Entity(name = "UserMovieComment")
+@Table(name = "userMovieComments")
 public class UserMovieComment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -12,10 +12,8 @@ public class UserMovieComment {
     @Column(name = "comment")
     private String comment;
     @ManyToOne
-    @JoinColumn(name = "movie_id")
     private UserMovie userMovie;
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     public int getId() {
