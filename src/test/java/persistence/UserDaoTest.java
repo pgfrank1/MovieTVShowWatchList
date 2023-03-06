@@ -17,7 +17,6 @@ public class UserDaoTest {
         database.runSQL("SetupDatabaseTest.sql");
         userDao = new UserDao();
     }
-
     @Test
     void getById() {
         assertEquals("Patrick", userDao.getById(1).getFirstName());
@@ -47,9 +46,7 @@ public class UserDaoTest {
 
     @Test
     void deleteSuccess() {
-
         userDao.delete(userDao.getById(1));
-
         assertNull(userDao.getById(1));
     }
 }
