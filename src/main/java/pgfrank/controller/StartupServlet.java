@@ -1,49 +1,42 @@
 package pgfrank.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import pgfrank.util.PropertiesLoader;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpServlet;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Map;
+import java.util.Properties;
 
-@WebServlet(
-        name = "applicationStartup",
-        urlPatterns = { "/application-startup" },
-        loadOnStartup = 1
-)
-public class StartupServlet extends HttpServlet {
+@WebListener
+public class StartupServlet extends HttpServlet implements PropertiesLoader, ServletContextListener {
     private final Logger logger = LogManager.getLogger(this.getClass());
+
+    Properties properties;
+
     @Override
-    public void init() {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        getServletContext().setAttribute("apiKey", "18ea9d78ec747b84f4c00083c25afb23");
-
-        String movieAPIUrl = "https://api.themoviedb.org/3/movie/popular?api_key="
-                + getServletContext().getAttribute("apiKey") + "&language=en-US&page=1";
-        String tvShowAPIUrl = "https://api.themoviedb.org/3/tv/popular?api_key="
-                + getServletContext().getAttribute("apiKey") + "&language=en-US&page=1";
-
+    public void contextInitialized(ServletContextEvent sce) {
         try {
-            URL urlMovie = new URL(movieAPIUrl);
-            URL urlTVShow = new URL(tvShowAPIUrl);
-            Map<String, Object> movieMap = objectMapper.readValue(urlMovie, new TypeReference<>() {});
-            Map<String, Object> tvShowMap = objectMapper.readValue(urlTVShow, new TypeReference<>() {});
-            //TODO: .get("results) is unnecessary EX: can use movieMap.results[i.index].overview to contain all JSON data received
-            getServletContext().setAttribute("movieMap", movieMap.get("results"));
-            getServletContext().setAttribute("tvShowMap", tvShowMap.get("results"));
-            logger.debug("Successfully retried Movie and TV show data for the index page:\n" + movieMap + "\n" + tvShowMap);
-        } catch (MalformedURLException e) {
-            logger.error("There was an error with forming the url.\n" + e);
+            properties = loadProperties("/theMovieDB.properties");
+            sce.getServletContext().setAttribute("apiKey", properties.getProperty("apiKey"));
+            sce.getServletContext().setAttribute("popularFirstPage", properties.getProperty("popular.first.page"));
+            sce.getServletContext().setAttribute("popularMovieUrl", properties.getProperty("popular.movie.url"));
+            sce.getServletContext().setAttribute("popularShowUrl", properties.getProperty("popular.show.url"));
+            sce.getServletContext().setAttribute("posterImageUrl", properties.getProperty("poster.image.url"));
+            sce.getServletContext().setAttribute("individualMovieInfoUrl", properties.getProperty("individual.movie.info.url"));
+            sce.getServletContext().setAttribute("individualShowInfoUrl", properties.getProperty("individual.show.info.url"));
+            sce.getServletContext().setAttribute("individualInfo", properties.getProperty("individual.page"));
         } catch (IOException e) {
-            logger.error("An IO error has occurred when attempting to read data from the API URL.\n" + e);
+            logger.error("There was an error attempting to open the movieDB properties file.\n" + e);
+        } catch (Exception e) {
+            logger.error("There was some kind of error while attempting to open the properties file.\n" + e);
         }
     }
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) { }
 }
