@@ -1,4 +1,4 @@
-package pgfrank.entity;
+package pgfrank.entity.movie;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
