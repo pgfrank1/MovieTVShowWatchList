@@ -7,6 +7,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pgfrank.auth.*;
+import pgfrank.entity.user.User;
+import pgfrank.persistence.GenericDao;
 import pgfrank.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.math.BigInteger;
 import java.net.URI;
@@ -77,15 +80,22 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String authCode = req.getParameter("code");
         String userName = null;
+        HttpSession session = req.getSession();
 
         if (authCode == null) {
-            //TODO forward to an error page or back to the login
+            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
+            dispatcher.forward(req, resp);
         } else {
             HttpRequest authRequest = buildAuthRequest(authCode);
             try {
+
                 TokenResponse tokenResponse = getToken(authRequest);
-                userName = validate(tokenResponse);
-                req.setAttribute("userName", userName);
+                DecodedJWT userInfo = validate(tokenResponse);
+                //String userName = jwt.getClaim("cognito:username").asString();
+                //String firstName = jwt.getClaim("given_name").asString();
+                session.setAttribute("userName", userInfo.getClaim("cognito:username").asString());
+                session.setAttribute("firstName", userInfo.getClaim("name").asString());
+                session.setAttribute("lastName", userInfo.getClaim("family_name").asString());
             } catch (IOException e) {
                 logger.error("Error getting or validating the token: " + e.getMessage(), e);
                 //TODO forward to an error page
@@ -131,7 +141,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
      * @return
      * @throws IOException
      */
-    private String validate(TokenResponse tokenResponse) throws IOException {
+    private DecodedJWT validate(TokenResponse tokenResponse) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         CognitoTokenHeader tokenHeader = mapper.readValue(CognitoJWTParser.getHeader(tokenResponse.getIdToken()).toString(), CognitoTokenHeader.class);
 
@@ -170,13 +180,23 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         DecodedJWT jwt = verifier.verify(tokenResponse.getIdToken());
         String userName = jwt.getClaim("cognito:username").asString();
         logger.debug("here's the username: " + userName);
-
         logger.debug("here are all the available claims: " + jwt.getClaims());
+        //TODO: Place this in it's own method. Checks if the user already exists in the database
+        GenericDao<User> daoUsers = new GenericDao<>(User.class);
+        List<User> users = daoUsers.getAll();
+        for (User checkUser : users) {
+            if (checkUser.getUsername().equals(jwt.getClaim("cognito:username").asString())) {
+                break;
+            }
+            else {
+                User user = new User(jwt.getClaim("cognito:username").asString(), null,
+                        jwt.getClaim("name").asString(), jwt.getClaim("family_name").asString());
+                daoUsers.insertType(user);
+            }
+        }
 
         // TODO decide what you want to do with the info!
-        // for now, I'm just returning username for display back to the browser
-
-        return userName;
+        return jwt;
     }
 
     /** Create the auth url and use it to build the request.
