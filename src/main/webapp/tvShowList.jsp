@@ -32,7 +32,7 @@
             <p class="card-text"><c:out value="${tvShowMap.results[i.index + 1].overview}" /></p>
           </c:otherwise>
         </c:choose>
-        <a href="./TVShowInfo?tv_id=${tvShowMap.results[i.index].id}" class="btn btn-primary">Get Info</a>
+        <a href="./TVShowInfo?tv_id=${tvShowMap.results[i.index + 1].id}" class="btn btn-primary">Get Info</a>
       </div>
     </div>
   </div>
