@@ -14,7 +14,7 @@ import java.io.IOException;
 )
 public class TVShowList extends HttpServlet {
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String urlForward = "/TVShowInfo.jsp";
+        String urlForward = "/tvShowInfo.jsp";
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(urlForward);
         dispatcher.forward(req, resp);

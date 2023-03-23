@@ -14,7 +14,7 @@ import java.io.IOException;
 )
 public class MovieList extends HttpServlet {
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String urlForward = "/MovieInfo.jsp";
+        String urlForward = "/movieInfo.jsp";
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(urlForward);
         dispatcher.forward(req, resp);
