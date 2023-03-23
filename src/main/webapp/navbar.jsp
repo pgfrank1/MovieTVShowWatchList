@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
@@ -11,7 +12,14 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./logIn">Login</a>
+                    <c:choose>
+                        <c:when test="${userName != null}">
+                            <a class="nav-link" href="#">${firstName} ${lastName}</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a class="nav-link" href="./logIn">Login</a>
+                        </c:otherwise>
+                    </c:choose>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./MovieList">Movies</a>
