@@ -3,6 +3,7 @@ package pgfrank.entity.user;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 @Table(name = "Users")
 public class User {
 
-    public User() {}
+    public User() { }
 
     public User(String username, String profilePhotoLocation, String firstName, String lastName) {
         this.username = username;
@@ -30,7 +31,7 @@ public class User {
     @Column(name = "username", nullable = false, length = 50)
     private String username;
 
-    @Column(name = "profilePhotoLocation", nullable = false, length = 50)
+    @Column(name = "profilePhotoLocation", length = 50)
     private String profilePhotoLocation;
 
     @Column(name = "firstName", nullable = false, length = 50)
