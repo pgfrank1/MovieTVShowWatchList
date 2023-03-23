@@ -1,7 +1,7 @@
 package persistence;
 
-import pgfrank.entity.User;
-import pgfrank.persistence.UserDao;
+import pgfrank.entity.user.User;
+import pgfrank.persistence.GenericDao;
 import util.Database;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,52 +11,63 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserDaoTest {
-    private User user;
-    private UserDao userDao;
+    User user;
+    List<User> users;
+    GenericDao<User> dao;
 
     @BeforeEach
     void setUp() {
         Database database = Database.getInstance();
         database.runSQL("SetupDatabaseTest.sql");
-        userDao = new UserDao();
+        dao = new GenericDao<>(User.class);
+        users = dao.getAll();
     }
     @Test
     void getByUserId() {
-        assertEquals("Patrick", userDao.getUserById(1).getFirstName());
+        User user1 = dao.getTypeById(1);
+        assertEquals("Patrick", user1.getFirstName());
+    }
+    @Test
+    void getByColumnValue() {
+        String firstName = "";
+        for (User getUser : dao.getAll()) {
+            if (getUser.getFirstName().equals("Patrick")) {
+                firstName = getUser.getFirstName();
+            }
+        }
+        assertEquals("Patrick", firstName);
     }
     @Test
     void testInsertUser() {
-        user = new User("testUsername", "testPassword", "/testPhotoLocationUnitTest", "Unit", "Testing");
-        int id = userDao.insertUser(user);
+        user = new User("testUserName", "/testPhotoLocation", "Test", "User");
+        int id = dao.insertType(user).getId();
         assertNotEquals(0, id);
-        User insertedUser = userDao.getUserById(id);
-        assertEquals("Unit", insertedUser.getFirstName());
-        assertEquals("Testing", insertedUser.getLastName());
+        User insertedUser = dao.getTypeById(id);
+        assertEquals("Test", insertedUser.getFirstName());
+        assertEquals("User", insertedUser.getLastName());
     }
 
     @Test
     void updateSuccess() {
-        user = userDao.getUserById(1);
+        user = dao.getTypeById(1);
         user.setFirstName("Update");
         user.setLastName("Test");
-        userDao.saveOrUpdateUser(user);
+        dao.saveOrUpdateType(user);
 
-        User userToCheck = userDao.getUserById(1);
+        User userToCheck = dao.getTypeById(1);
         assertEquals(user.getFirstName(), userToCheck.getFirstName());
         assertEquals(user.getLastName(), userToCheck.getLastName());
     }
 
-    //TODO: Error occurred validating the Criteria, IllegalArgumentException
     @Test
     void getAllUsers() {
-        List<User> users = userDao.getAllUsers();
-
+        assertEquals(2, users.size());
     }
 
-    //TODO: not currently working. Cascading is very strange
     @Test
     void deleteSuccess() {
-        userDao.deleteUser(userDao.getUserById(1));
-        assertNull(userDao.getUserById(1));
+        dao.deleteType(dao.getTypeById(1));
+        List<User> users = dao.getAll();
+        assertEquals(users.size(), 1);
     }
 }
