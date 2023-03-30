@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("IndieProject_war/users")
+@Path("/users")
 public class RESTfulUsers {
     @GET
     @Produces(MediaType.TEXT_HTML)
