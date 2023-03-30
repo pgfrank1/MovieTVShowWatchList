@@ -26,3 +26,30 @@
     <li>Updated the individual TV show info page so that the title, poster, and description appears</li>
     <li>Created the UserDAO and UserDAOTest. So far the tests are passing.</li>
 </ul>
+<h3>Week 8</h3>
+<h4>03/05/2023</h4>
+<ul>
+    <li>User DAO is created and the test is partially working</li>
+    <li>Added AWS Cognito Authentication with the needed properties file</li>
+    <li>Moved the taglibs to their own JSP file</li>
+    <li>Added the PropertiesLoader class to get the AWS Cognito properties</li>
+</ul>
+<h3>Spring Break</h3>
+<h4>03/12/2023</h4>
+<ul>
+    <li>Added RESTful API services utilizing POJO objects for Movie data retrieval</li>
+    <li>Updated the database to better reflect table names</li>
+    <li>Created a GenericDAO to be able to handle any calls to the database</li>
+    <li>Changed the directory structure for Entities, so they are more organized</li>
+    <li>Removed the resources directories from GitHub to hide the API key</li>
+</ul>
+<h3>Week 9</h3>
+<h4>03/19/2023</h4>
+<ul>
+    <li>Created POJOs for the TV show JSON data</li>
+    <li>Removed old necessary files from the project</li>
+    <li>Updated redundant POJO objects into a SharedInfo folder</li>
+    <li>Fixed an issue where the correct TV show id wasn't appearing for the link</li>
+    <li>Added a servlet listener to startup when the project is loaded. It generally loads all of the properties</li>
+    <li>Auth class now retrieves necessary data for the database</li>
+</ul>
