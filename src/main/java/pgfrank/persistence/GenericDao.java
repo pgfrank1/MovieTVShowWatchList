@@ -37,7 +37,7 @@ public class GenericDao<T> {
     }
 
     public int insertType(T entity) {
-        int id = 0;
+        int id;
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
         id = (int)session.save(entity);
@@ -66,8 +66,9 @@ public class GenericDao<T> {
         Session session = getSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(type);
-        //DONT REMOVE, YOU NEED THIS
+        //DON'T REMOVE, YOU NEED THIS
         Root<T> root = query.from(type);
+        //
         List<T> list = session.createQuery(query).getResultList();
         session.close();
         return list;
