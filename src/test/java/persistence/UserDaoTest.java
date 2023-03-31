@@ -29,7 +29,6 @@ public class UserDaoTest {
     }
     @Test
     void getByPropertyValue() {
-        User user1 = (User) dao.getTypeById(1);
         List<User> users1 = dao.getByPropertyValue("firstName", "Patrick");
         assertEquals("Patrick", users1.get(0).getFirstName());
     }
@@ -46,7 +45,7 @@ public class UserDaoTest {
     @Test
     void testInsertUser() {
         user = new User("testUserName", "/testPhotoLocation", "Test", "User");
-        int id = dao.insertType(user).getId();
+        int id = dao.insertType(user);
         assertNotEquals(0, id);
         User insertedUser = dao.getTypeById(id);
         assertEquals("Test", insertedUser.getFirstName());
