@@ -21,7 +21,7 @@
             </div>
         </div>
     </main>
-
+    <c:import url="../footer.jsp" />
 <c:import url="../bootStrapScript.jsp" />
 </body>
 </html>
