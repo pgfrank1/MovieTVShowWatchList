@@ -1,10 +1,9 @@
 package pgfrank.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pgfrank.entity.tvShow.TVShowIndividualInfo;
+import pgfrank.entity.movie.MovieIndividualInfo;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,9 +13,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Map;
 
 @WebServlet(
         name = "MovieDataRetrieval",
@@ -38,8 +34,8 @@ public class MovieDataRetrieval extends HttpServlet {
         String dbResponse = target.request(MediaType.APPLICATION_JSON).get(String.class);
 
         ObjectMapper mapper = new ObjectMapper();
-        TVShowIndividualInfo showResponse = mapper.readValue(dbResponse, TVShowIndividualInfo.class);
-        request.setAttribute("showInfo", showResponse);
+        MovieIndividualInfo showResponse = mapper.readValue(dbResponse, MovieIndividualInfo.class);
+        request.setAttribute("movieInfo", showResponse);
 
         String urlForward = "/individualMovieInfo.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(urlForward);
