@@ -8,7 +8,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "UserTVShowComments")
 public class UserTVShowComment {
@@ -26,4 +25,12 @@ public class UserTVShowComment {
     @Column(name = "comment", nullable = false)
     private String comment;
 
+    @Override
+    public String toString() {
+        return "UserTVShowComment{" +
+                "id=" + id +
+                ", userTVShow=" + userTVShow +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

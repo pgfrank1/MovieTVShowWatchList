@@ -8,7 +8,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 public class UserTVShowRating {
     @EmbeddedId
@@ -25,4 +24,12 @@ public class UserTVShowRating {
     @Column(name = "rating", nullable = false)
     private Integer rating;
 
+    @Override
+    public String toString() {
+        return "UserTVShowRating{" +
+                "id=" + id +
+                ", userTVShow=" + userTVShow +
+                ", rating=" + rating +
+                '}';
+    }
 }

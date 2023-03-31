@@ -8,7 +8,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @Entity
 public class UserMovie {
 
@@ -50,4 +49,15 @@ public class UserMovie {
     @OneToMany(mappedBy = "userMovie")
     private Set<UserMovieComment> userMovieComments = new LinkedHashSet<>();
 
+    @Override
+    public String toString() {
+        return "UserMovie{" +
+                "id=" + id +
+                ", user=" + user +
+                ", watched=" + watched +
+                ", planned=" + planned +
+                ", watching=" + watching +
+                ", dropped=" + dropped +
+                '}';
+    }
 }

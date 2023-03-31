@@ -12,7 +12,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Embeddable
 public class UserTVShowRatingId implements Serializable {
     private static final long serialVersionUID = 257465687234482965L;
@@ -36,4 +35,11 @@ public class UserTVShowRatingId implements Serializable {
         return Objects.hash(showId, userId);
     }
 
+    @Override
+    public String toString() {
+        return "UserTVShowRatingId{" +
+                "userId=" + userId +
+                ", showId=" + showId +
+                '}';
+    }
 }

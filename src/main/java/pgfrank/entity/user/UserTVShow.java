@@ -10,7 +10,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 public class UserTVShow {
     @EmbeddedId
@@ -39,4 +38,15 @@ public class UserTVShow {
     @OneToOne(mappedBy = "userTVShow")
     private UserTVShowRating userTVShowRating;
 
+    @Override
+    public String toString() {
+        return "UserTVShow{" +
+                "id=" + id +
+                ", user=" + user +
+                ", watched=" + watched +
+                ", planned=" + planned +
+                ", watching=" + watching +
+                ", dropped=" + dropped +
+                '}';
+    }
 }

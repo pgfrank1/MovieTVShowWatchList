@@ -13,7 +13,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Embeddable
 public class UserTVShowCommentId implements Serializable {
     private static final long serialVersionUID = 494338642413274748L;
@@ -41,4 +40,12 @@ public class UserTVShowCommentId implements Serializable {
         return Objects.hash(showId, timeCreated, userId);
     }
 
+    @Override
+    public String toString() {
+        return "UserTVShowCommentId{" +
+                "showId=" + showId +
+                ", userId=" + userId +
+                ", timeCreated=" + timeCreated +
+                '}';
+    }
 }
