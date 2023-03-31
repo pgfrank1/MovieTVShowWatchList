@@ -15,30 +15,22 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.util.Properties;
 
 @WebServlet(
         name = "InitialSessionServlet",
         urlPatterns = { "/index.jsp" })
 public class InitialSessionServlet extends HttpServlet implements PropertiesLoader {
     private final Logger logger = LogManager.getLogger(this.getClass());
-    Properties propertiesMovieDB;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            propertiesMovieDB = loadProperties("/theMovieDB.properties");
-        } catch (IOException e) {
-            logger.error("There was an error attempting to open the movieDB properties file.\n" + e);
-        } catch (Exception e) {
-            logger.error("There was some kind of error while attempting to open the properties file.\n" + e);
-        }
 
         Client client = ClientBuilder.newClient();
         String movieAPIUrl = (String) getServletContext().getAttribute("popularMovieUrl")
                 + getServletContext().getAttribute("apiKey") + getServletContext().getAttribute("popularFirstPage");
         String showAPIUrl = (String) getServletContext().getAttribute("popularShowUrl")
                 + getServletContext().getAttribute("apiKey") + getServletContext().getAttribute("popularFirstPage");
+        logger.info("Attempting to retrieve Show and movie information");
         WebTarget targetMovie = client.target(movieAPIUrl);
         WebTarget targetShow = client.target(showAPIUrl);
         String dbResponseMovie = targetMovie.request(MediaType.APPLICATION_JSON).get(String.class);
@@ -47,6 +39,7 @@ public class InitialSessionServlet extends HttpServlet implements PropertiesLoad
         ObjectMapper mapper = new ObjectMapper();
         MoviePopularResponse moviePopularResponse = mapper.readValue(dbResponseMovie, MoviePopularResponse.class);
         TVShowPopularResponse showPopularResponse = mapper.readValue(dbResponseShow, TVShowPopularResponse.class);
+        logger.info("Mapping Show and Movie JSON responses");
         request.setAttribute("movieMap", moviePopularResponse);
         request.setAttribute("tvShowMap", showPopularResponse);
 
