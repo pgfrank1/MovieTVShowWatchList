@@ -55,3 +55,5 @@ fabric.properties
 # ignore logs folder
 /logs/
 
+/src/main/.ebextensions/
+/src/main/.platform/
