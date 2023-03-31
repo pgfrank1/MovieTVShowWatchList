@@ -28,6 +28,12 @@ public class UserDaoTest {
         assertEquals("Patrick", user1.getFirstName());
     }
     @Test
+    void getByPropertyValue() {
+        User user1 = (User) dao.getTypeById(1);
+        List<User> users1 = dao.getByPropertyValue("firstName", "Patrick");
+        assertEquals("Patrick", users1.get(0).getFirstName());
+    }
+    @Test
     void getByColumnValue() {
         String firstName = "";
         for (User getUser : dao.getAll()) {
