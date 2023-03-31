@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServlet;
 import java.io.IOException;
@@ -31,6 +30,14 @@ public class StartupServlet extends HttpServlet implements PropertiesLoader, Ser
             sce.getServletContext().setAttribute("individualMovieInfoUrl", properties.getProperty("individual.movie.info.url"));
             sce.getServletContext().setAttribute("individualShowInfoUrl", properties.getProperty("individual.show.info.url"));
             sce.getServletContext().setAttribute("individualInfo", properties.getProperty("individual.page"));
+            properties = loadProperties("/cognito.properties");
+            sce.getServletContext().setAttribute("CLIENT_ID", properties.getProperty("client.id"));
+            sce.getServletContext().setAttribute("CLIENT_SECRET", properties.getProperty("client.secret"));
+            sce.getServletContext().setAttribute("OAUTH_URL", properties.getProperty("oauthURL"));
+            sce.getServletContext().setAttribute("LOGIN_URL", properties.getProperty("loginURL"));
+            sce.getServletContext().setAttribute("REDIRECT_URL", properties.getProperty("redirectURL"));
+            sce.getServletContext().setAttribute("REGION", properties.getProperty("region"));
+            sce.getServletContext().setAttribute("POOL_ID", properties.getProperty("poolId"));
         } catch (IOException e) {
             logger.error("There was an error attempting to open the movieDB properties file.\n" + e);
         } catch (Exception e) {
