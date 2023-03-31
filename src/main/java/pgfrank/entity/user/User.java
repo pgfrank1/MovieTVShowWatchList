@@ -9,7 +9,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "Users")
 public class User {
@@ -58,4 +57,14 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<UserMovie> userMovies = new LinkedHashSet<>();
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", profilePhotoLocation='" + profilePhotoLocation + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 }
