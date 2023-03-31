@@ -44,7 +44,6 @@
                 <li class="nav-item">
                     <a class="nav-link disabled">Disabled</a>
                 </li>
-                <img class="nav-link mx-auto" src="./img/tmdbLogo.svg" alt="The Movie Database Logo">
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
