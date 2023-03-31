@@ -2,7 +2,6 @@ package pgfrank.persistence;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -26,11 +25,20 @@ public class GenericDao<T> {
         session.close();
         return entity;
     }
+
+    public List<T> getByPropertyValue(String propertyValue, Object value) {
+        Session session = getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        query.select(root).where(builder.equal(root.get(propertyValue), value));
+
+        return session.createQuery(query).getResultList();
+    }
+
     public <T> T insertType(T entity) {
-        T id = null;
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
-        id = (T)session.save(entity);
         transaction.commit();
         session.close();
         return entity;
@@ -56,7 +64,6 @@ public class GenericDao<T> {
         Session session = getSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(type);
-        Root<T> root = query.from(type);
         List<T> list = session.createQuery(query).getResultList();
         session.close();
         return list;
