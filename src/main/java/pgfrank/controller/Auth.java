@@ -39,7 +39,6 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
 
@@ -52,14 +51,6 @@ import java.util.stream.Collectors;
  */
 
 public class Auth extends HttpServlet implements PropertiesLoader {
-    Properties properties;
-    String CLIENT_ID;
-    String CLIENT_SECRET;
-    String OAUTH_URL;
-    String LOGIN_URL;
-    String REDIRECT_URL;
-    String REGION;
-    String POOL_ID;
     Keys jwks;
 
     private final Logger logger = LogManager.getLogger(this.getClass());
@@ -67,7 +58,6 @@ public class Auth extends HttpServlet implements PropertiesLoader {
     @Override
     public void init() throws ServletException {
         super.init();
-        loadProperties();
         loadKey();
     }
 
@@ -169,7 +159,8 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) publicKey, null);
 
         // Verify ISS field of the token to make sure it's from the Cognito source
-        String iss = String.format("https://cognito-idp.%s.amazonaws.com/%s", REGION, POOL_ID);
+        String iss = String.format("https://cognito-idp.%s.amazonaws.com/%s", getServletContext().getAttribute("REGION"),
+                getServletContext().getAttribute("POOL_ID"));
 
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer(iss)
@@ -202,14 +193,15 @@ public class Auth extends HttpServlet implements PropertiesLoader {
      * @return the constructed oauth request
      */
     private HttpRequest buildAuthRequest(String authCode) {
-        String keys = CLIENT_ID + ":" + CLIENT_SECRET;
+        String keys = getServletContext().getAttribute("CLIENT_ID") + ":"
+                + getServletContext().getAttribute("CLIENT_SECRET");
 
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("grant_type", "authorization_code");
-        parameters.put("client-secret", CLIENT_SECRET);
-        parameters.put("client_id", CLIENT_ID);
+        parameters.put("client-secret", (String) getServletContext().getAttribute("CLIENT_SECRET"));
+        parameters.put("client_id", (String) getServletContext().getAttribute("CLIENT_ID"));
         parameters.put("code", authCode);
-        parameters.put("redirect_uri", REDIRECT_URL);
+        parameters.put("redirect_uri", (String) getServletContext().getAttribute("REDIRECT_URL"));
 
         String form = parameters.keySet().stream()
                 .map(key -> key + "=" + URLEncoder.encode(parameters.get(key), StandardCharsets.UTF_8))
@@ -217,7 +209,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
         String encoding = Base64.getEncoder().encodeToString(keys.getBytes());
 
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(OAUTH_URL))
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create((String) getServletContext().getAttribute("OAUTH_URL")))
                 .headers("Content-Type", "application/x-www-form-urlencoded", "Authorization", "Basic " + encoding)
                 .POST(HttpRequest.BodyPublishers.ofString(form)).build();
         return request;
@@ -237,7 +229,8 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            URL jwksURL = new URL(String.format("https://cognito-idp.%s.amazonaws.com/%s/.well-known/jwks.json", REGION, POOL_ID));
+            URL jwksURL = new URL(String.format("https://cognito-idp.%s.amazonaws.com/%s/.well-known/jwks.json",
+                    getServletContext().getAttribute("REGION"), getServletContext().getAttribute("POOL_ID")));
             File jwksFile = new File("jwks.json");
             FileUtils.copyURLToFile(jwksURL, jwksFile);
             jwks = mapper.readValue(jwksFile, Keys.class);
@@ -254,7 +247,7 @@ public class Auth extends HttpServlet implements PropertiesLoader {
      * for authenticating a user.
      */
     // TODO This code appears in a couple classes, consider using a startup servlet similar to adv java project
-    private void loadProperties() {
+/*    private void loadProperties() {
         try {
             properties = loadProperties("/cognito.properties");
             CLIENT_ID = properties.getProperty("client.id");
@@ -269,5 +262,5 @@ public class Auth extends HttpServlet implements PropertiesLoader {
         } catch (Exception e) {
             logger.error("Error loading properties" + e.getMessage(), e);
         }
-    }
+    }*/
 }
