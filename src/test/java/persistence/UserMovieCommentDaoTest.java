@@ -29,8 +29,8 @@ public class UserMovieCommentDaoTest {
         database.runSQL("SetupDatabaseTest.sql");
 
     }
-    @Test
+/*    @Test
     void getUserComment() {
 
-    }
+    }*/
 }
