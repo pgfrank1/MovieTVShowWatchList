@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <!--AWS Connection URL-->
+<!--<property name="connection.url">jdbc:mysql://awseb-e-9hqebt3gsa-stack-awsebrdsdatabase-6pee6nyxz3wo.chjwcyktbq76.us-east-2.rds.amazonaws.com:3306/IndieProject</property>
+    <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="connection.username">student</property>
+    <property name="connection.password">students</property>-->
+
+    <!--Localhost connection url-->
+    <property name="connection.url">jdbc:mysql://localhost:3306/IndieProject</property>
+    <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="connection.username">root</property>
+    <property name="connection.password">student</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <mapping class="com.pgfrank.waww.entity.user.User"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserMovie"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserMovieId"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserMovieComment"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserMovieCommentId"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserMovieRating"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserMovieRatingId"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserTVShow"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserTVShowId"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserTVShowComment"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserTVShowCommentId"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserTVShowRating"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserTVShowRatingId"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserFriend"/>
+    <mapping class="com.pgfrank.waww.entity.user.UserFriendId"/>
+        </session-factory>
+        </hibernate-configuration>
