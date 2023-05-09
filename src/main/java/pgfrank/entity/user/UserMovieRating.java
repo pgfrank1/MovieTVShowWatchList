@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Table(name = "UserMovieRating")
 public class UserMovieRating {
     @EmbeddedId
     private UserMovieRatingId id;

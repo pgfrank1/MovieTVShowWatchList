@@ -53,6 +53,13 @@ public class UserDaoTest {
     }
 
     @Test
+    void testDontAddIfUserExists() {
+        user = new User("pgfrank1", null, "Patrick", "Frank");
+        int id = dao.insertType(user);
+
+    }
+
+    @Test
     void updateSuccess() {
         user = dao.getTypeById(1);
         user.setFirstName("Update");

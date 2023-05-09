@@ -6,14 +6,25 @@ import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Entity
+@Table(name = "UserTVShow")
 public class UserTVShow {
     @EmbeddedId
     private UserTVShowId id;
+
+    public UserTVShow() {
+    }
+
+    public UserTVShow(UserTVShowId id, User user, Boolean watched, Boolean planned, Boolean watching, Boolean dropped) {
+        this.id = id;
+        this.user = user;
+        this.watched = watched;
+        this.planned = planned;
+        this.watching = watching;
+        this.dropped = dropped;
+    }
 
     @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

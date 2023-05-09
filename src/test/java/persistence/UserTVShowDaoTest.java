@@ -1,65 +1,65 @@
 package persistence;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pgfrank.entity.movie.MovieIndividualInfo;
-import pgfrank.entity.user.User;
-import pgfrank.entity.user.UserMovie;
-import pgfrank.entity.user.UserMovieId;
+import pgfrank.entity.tvShow.TVShowIndividualInfo;
+import pgfrank.entity.user.*;
 import pgfrank.persistence.GenericDao;
 import pgfrank.persistence.GenericDaoEmbeddedId;
 import pgfrank.util.RetrieveContentData;
 import util.Database;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserMovieDaoTest {
+public class UserTVShowDaoTest {
 
     User user;
     List<User> users;
-    MovieIndividualInfo movie;
-    UserMovie userMovie;
-    UserMovieId userMovieId;
-    List<UserMovie> userMovies;
+    TVShowIndividualInfo movie;
+    UserTVShow userMovie;
+    UserTVShowId userMovieId;
+    List<UserTVShow> userMovies;
     GenericDao<User> daoUser;
-    GenericDao<UserMovie> daoUserMovie;
-    GenericDaoEmbeddedId<UserMovie, UserMovieId> daoMovieEmbeddedId;
-    RetrieveContentData<MovieIndividualInfo> contentData;
+    GenericDao<UserTVShow> daoUserMovie;
+    GenericDaoEmbeddedId<UserTVShow, UserTVShowId> daoMovieEmbeddedId;
+    RetrieveContentData<TVShowIndividualInfo> contentData;
 
     @BeforeEach
     void setUp() throws Exception {
         Database database = Database.getInstance();
         database.runSQL("SetupDatabaseTest.sql");
         daoUser = new GenericDao<>(User.class);
-        daoUserMovie = new GenericDao<>(UserMovie.class);
-        daoMovieEmbeddedId = new GenericDaoEmbeddedId<>(UserMovie.class, UserMovieId.class);
-        userMovie = new UserMovie();
-        contentData = new RetrieveContentData<>(MovieIndividualInfo.class);
-        userMovieId = new UserMovieId(1234, 2);
+        daoUserMovie = new GenericDao<>(UserTVShow.class);
+        daoMovieEmbeddedId = new GenericDaoEmbeddedId<>(UserTVShow.class, UserTVShowId.class);
+        userMovie = new UserTVShow();
+        contentData = new RetrieveContentData<>(TVShowIndividualInfo.class);
+        userMovieId = new UserTVShowId(123, 1);
         users = daoUser.getAll();
         userMovies = daoUserMovie.getAll();
     }
     @Test
     void getByMovieId() {
-        userMovie = (UserMovie) daoMovieEmbeddedId.getTypeByEmbeddedId(userMovieId);
-        assertEquals(1234, (int) userMovie.getId().getMovieId());
+        userMovie = daoMovieEmbeddedId.getTypeByEmbeddedId(userMovieId);
+        assertEquals(123, (int) userMovie.getId().getShowId());
     }
     @Test
     void getMovieTitleById() throws JsonProcessingException {
-        movie = (MovieIndividualInfo) contentData.getContentInfo(550);
-        assertEquals("Fight Club", movie.getTitle());
+        movie =  contentData.getContentInfo(550);
+        assertEquals("Till Death Us Do Part", movie.getName());
     }
     @Test
     void addMovie() {
-        UserMovieId userMovieId = new UserMovieId(550, 1);
+        UserTVShowId userMovieId = new UserTVShowId(1234, 1);
         user = daoUser.getTypeById(1);
-        UserMovie movie1 = new UserMovie(userMovieId, user, false, true, false, false);
+        UserTVShow movie1 = new UserTVShow(userMovieId, user, false, true, false, false);
         daoMovieEmbeddedId.addTypeByEmbeddedId(movie1);
         userMovies = daoUserMovie.getAll();
-        assertEquals(userMovieId.getMovieId(), userMovies.get(0).getId().getMovieId());
-        assertEquals(userMovieId.getUserId(), userMovies.get(0).getId().getUserId());
+        assertEquals(userMovieId.getShowId(), userMovies.get(2).getId().getShowId());
+        assertEquals(userMovieId.getUserId(), userMovies.get(2).getId().getUserId());
     }
     @Test
     void deleteMovie() {
@@ -70,11 +70,11 @@ public class UserMovieDaoTest {
     }
     @Test
     void updateMovie() {
-        userMovie = (UserMovie) daoMovieEmbeddedId.getTypeByEmbeddedId(userMovieId);
+        userMovie = daoMovieEmbeddedId.getTypeByEmbeddedId(userMovieId);
         userMovie.setDropped(true);
         userMovie.setWatched(false);
         daoMovieEmbeddedId.saveOrUpdateType(userMovie);
-        UserMovie testMovie =  (UserMovie) daoMovieEmbeddedId.getTypeByEmbeddedId(userMovieId);
+        UserTVShow testMovie =  daoMovieEmbeddedId.getTypeByEmbeddedId(userMovieId);
         assertTrue(testMovie.getDropped());
         assertFalse(testMovie.getWatched());
     }

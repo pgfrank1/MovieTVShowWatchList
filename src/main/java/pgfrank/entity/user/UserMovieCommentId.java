@@ -5,12 +5,13 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Embeddable
@@ -25,6 +26,14 @@ public class UserMovieCommentId implements Serializable {
     @Column(name = "timeCreated", nullable = false)
     private Instant timeCreated;
 
+    public UserMovieCommentId() {
+    }
+    public UserMovieCommentId(Integer movieId, Integer userId, Instant timeCreated) {
+        this.movieId = movieId;
+        this.userId = userId;
+        this.timeCreated = timeCreated;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,7 +46,7 @@ public class UserMovieCommentId implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(movieId, timeCreated, userId);
+        return Objects.hash(movieId, userId, timeCreated);
     }
 
     @Override

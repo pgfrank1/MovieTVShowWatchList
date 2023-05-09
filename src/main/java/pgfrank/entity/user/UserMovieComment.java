@@ -3,9 +3,7 @@ package pgfrank.entity.user;
 import lombok.*;
 
 import javax.persistence.*;
-
-@AllArgsConstructor
-@NoArgsConstructor
+import java.sql.Timestamp;
 @Getter
 @Setter
 @Entity
@@ -14,11 +12,10 @@ public class UserMovieComment {
     @EmbeddedId
     private UserMovieCommentId id;
 
-    @MapsId
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER) // use eager fetching for userMovie association
     @JoinColumns({
-            @JoinColumn(name = "movieId", referencedColumnName = "movieId", nullable = false),
-            @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
+            @JoinColumn(name = "movieId", referencedColumnName = "movieId", insertable = false, updatable = false),
+            @JoinColumn(name = "userId", referencedColumnName = "userId", insertable = false, updatable = false)
     })
     private UserMovie userMovie;
 

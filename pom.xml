@@ -15,7 +15,7 @@
     <junit-vintage-version>4.12.0</junit-vintage-version>
     <javax.version>7.0</javax.version>
     <jstl-version>1.2</jstl-version>
-    <log4j-version>2.10.0</log4j-version>
+    <log4j-version>2.16.0</log4j-version>
     <jupiter-version>5.0.0</jupiter-version>
     <junit-platform-runner-version>1.0.0</junit-platform-runner-version>
     <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
@@ -105,12 +105,12 @@
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
+      <artifactId>log4j-core</artifactId>
       <version>${log4j-version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
+      <artifactId>log4j-api</artifactId>
       <version>${log4j-version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
@@ -119,7 +119,11 @@
       <artifactId>jackson-core</artifactId>
       <version>${jackson-version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-servlet</artifactId>
+      <version>${jersey-version}</version>
+    </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>

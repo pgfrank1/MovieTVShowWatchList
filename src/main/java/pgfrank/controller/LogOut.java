@@ -6,11 +6,13 @@ import pgfrank.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -64,8 +66,9 @@ public class LogOut extends HttpServlet implements PropertiesLoader {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // TODO if properties weren't loaded properly, route to an error page
         String url = LOGOUT_URL + "?client_id=" + CLIENT_ID + "&logout_uri=" + REDIRECT_URL;
-        Session session = SessionFactoryProvider.getSessionFactory().openSession();
-        session.close();
+        //Session session = SessionFactoryProvider.getSessionFactory().openSession();
+        HttpSession session1 = req.getSession();
+        session1.invalidate();
         resp.sendRedirect(url);
     }
 }

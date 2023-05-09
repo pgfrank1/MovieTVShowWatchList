@@ -30,6 +30,8 @@
 
 # IntelliJ
 /out/
+/src/main/resources/
+/src/test/resources/
 
 # Maven
 /target/
@@ -54,6 +56,9 @@ fabric.properties
 .idea/
 # ignore logs folder
 /logs/
-
+/src/main/resources/
+/src/test/resources/
+/src/main/.ebextensions/
+/src/main/.platform/
 /src/main/.ebextensions/
 /src/main/.platform/

@@ -32,15 +32,17 @@ public class GenericDao<T> {
         CriteriaQuery<T> query = builder.createQuery(type);
         Root<T> root = query.from(type);
         query.select(root).where(builder.equal(root.get(propertyValue), value));
+        List<T> result = session.createQuery(query).getResultList();
+        session.close();
 
-        return session.createQuery(query).getResultList();
+        return result;
     }
 
     public int insertType(T entity) {
-        int id;
+        int id  = 0;
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
-        id = (int)session.save(entity);
+        session.save(entity);
         transaction.commit();
         session.close();
         return id;

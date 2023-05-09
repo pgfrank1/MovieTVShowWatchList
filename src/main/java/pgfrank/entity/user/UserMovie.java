@@ -9,6 +9,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Table(name = "UserMovie")
 public class UserMovie {
 
     public UserMovie() {
