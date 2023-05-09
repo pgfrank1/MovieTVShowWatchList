@@ -38,6 +38,16 @@
                         <p>${movieInfo.releaseDate}</p>
                     </div>
                 </div>
+                <div class="row">
+                    <c:choose>
+                        <c:when test="${userName != null}">
+                                    <c:out value="${userMovie}" />
+                        </c:when>
+                        <c:otherwise>
+                            <a class="nav-link" href="./logIn">Login</a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </div>
         </div>
     </div>

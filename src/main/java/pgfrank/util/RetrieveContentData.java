@@ -42,9 +42,7 @@ public class RetrieveContentData<T> implements PropertiesLoader {
         String dbResponse = target.request(MediaType.APPLICATION_JSON).get(String.class);
 
         ObjectMapper mapper = new ObjectMapper();
-        T response = (T) mapper.readValue(dbResponse, type);
-
-        return response;
+        return (T) mapper.readValue(dbResponse, type);
     }
 
 }

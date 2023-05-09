@@ -209,10 +209,9 @@ public class Auth extends HttpServlet implements PropertiesLoader {
 
         String encoding = Base64.getEncoder().encodeToString(keys.getBytes());
 
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create((String) getServletContext().getAttribute("OAUTH_URL")))
+        return HttpRequest.newBuilder().uri(URI.create((String) getServletContext().getAttribute("OAUTH_URL")))
                 .headers("Content-Type", "application/x-www-form-urlencoded", "Authorization", "Basic " + encoding)
                 .POST(HttpRequest.BodyPublishers.ofString(form)).build();
-        return request;
     }
 
     /**
