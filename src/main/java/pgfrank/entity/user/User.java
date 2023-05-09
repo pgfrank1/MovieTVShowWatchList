@@ -51,10 +51,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "userId"))
     private Set<User> friend = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserTVShow> userTVShows = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserMovie> userMovies = new LinkedHashSet<>();
 
     @Override

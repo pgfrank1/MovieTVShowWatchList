@@ -17,13 +17,22 @@
                     <th scope="col">Last Name</th>
                 </tr>
             <tbody>
-            <c:forEach var="user" items="${users}" >
+            <c:forEach var="user" items="${userMovies}" >
                 <tr>
                     <td><c:out value="${user.id}" /></td>
-                    <td><c:out value="${user.username}" /></td>
-                    <td><c:out value="${user.profilePhotoLocation}" /></td>
-                    <td><c:out value="${user.firstName}" /></td>
-                    <td><c:out value="${user.lastName}" /></td>
+                    <td><c:out value="${user.user}" /></td>
+                    <td><c:out value="${user.watched}" /></td>
+                    <td><c:out value="${user.planned}" /></td>
+                    <td><c:out value="${user.watching}" /></td>
+                </tr>
+            </c:forEach>
+            <c:forEach var="user" items="${userTVShows}" >
+                <tr>
+                    <td><c:out value="${user.id}" /></td>
+                    <td><c:out value="${user.user}" /></td>
+                    <td><c:out value="${user.watched}" /></td>
+                    <td><c:out value="${user.planned}" /></td>
+                    <td><c:out value="${user.watching}" /></td>
                 </tr>
             </c:forEach>
             </tbody>

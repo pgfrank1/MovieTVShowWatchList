@@ -15,7 +15,7 @@ public class UserMovieRating {
     private UserMovieRatingId id;
 
     @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumns({
             @JoinColumn(name = "movieId", referencedColumnName = "movieId", nullable = false),
             @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)

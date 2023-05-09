@@ -15,7 +15,7 @@ public class UserTVShowComment {
     private UserTVShowCommentId id;
 
     @MapsId
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumns({
             @JoinColumn(name = "showId", referencedColumnName = "showId", nullable = false),
             @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)

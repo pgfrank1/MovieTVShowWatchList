@@ -14,7 +14,7 @@
                 <li class="nav-item">
                     <c:choose>
                         <c:when test="${userName != null}">
-                            <a class="nav-link" href="#">${firstName} ${lastName}</a>
+                            <a class="nav-link" href="./UserProfilePage">${firstName} ${lastName}</a>
                         </c:when>
                         <c:otherwise>
                             <a class="nav-link" href="./logIn">Login</a>
@@ -26,9 +26,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./TVShowList">TV Shows</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./UserProfilePage">Database Users</a>
                 </li>
                 <li class="nav-item">
                     <c:choose>
