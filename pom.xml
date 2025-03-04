@@ -10,7 +10,7 @@
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-    <hibernate-version>5.4.4.Final</hibernate-version>
+    <hibernate-version>5.4.24.Final</hibernate-version>
     <junit.version>4.12</junit.version>
     <junit-vintage-version>4.12.0</junit-vintage-version>
     <javax.version>7.0</javax.version>
